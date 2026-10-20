@@ -28,8 +28,54 @@
     </div>
     <!-- END NAVBAR LOGO -->
 
+    <!-- BEGIN MOBILE HEADER ACTIONS -->
+    <div class="navbar-nav flex-row d-lg-none ms-auto align-items-center">
+      <!-- Quick Action POS (Mobile) -->
+      <div class="nav-item me-1">
+        <a href="{{ route('sales.create') }}" class="btn btn-sm btn-primary btn-icon" title="Kasir POS Baru">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+        </a>
+      </div>
+
+      <!-- Theme Toggle (Mobile) -->
+      <div class="nav-item me-1">
+        <a href="?theme=dark" class="nav-link px-1 hide-theme-dark" title="Mode Gelap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>
+        </a>
+        <a href="?theme=light" class="nav-link px-1 hide-theme-light" title="Mode Terang">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+        </a>
+      </div>
+
+      <!-- User Dropdown (Mobile) -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Menu Pengguna">
+          <span class="avatar avatar-sm rounded" style="background-image: url('{{ asset('vendor/tabler/static/avatars/000m.jpg') }}')"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <div class="dropdown-header">
+            <div class="fw-bold">{{ Auth::user()->name ?? 'Pengguna' }}</div>
+            <div class="small text-secondary">{{ Auth::user()->email ?? '' }}</div>
+          </div>
+          <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+          <a href="{{ route('sales.create') }}" class="dropdown-item">Kasir POS Baru</a>
+          <a href="{{ route('sales.index') }}" class="dropdown-item">Riwayat Penjualan</a>
+          @if (Auth::user()?->isAdmin())
+            <a href="{{ route('products.index') }}" class="dropdown-item">Manajemen Barang</a>
+            <a href="{{ route('users.index') }}" class="dropdown-item">Kelola Kasir &amp; Akun</a>
+          @endif
+          <div class="dropdown-divider"></div>
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="dropdown-item text-danger">Keluar (Logout)</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END MOBILE HEADER ACTIONS -->
+
     <!-- BEGIN SIDEBAR USER (MOBILE/DESKTOP) -->
-    <div class="navbar-footer d-none d-lg-block order-last mt-auto border-top pt-3">
+    <div class="navbar-footer order-last mt-auto border-top pt-3">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center text-truncate">
           <span style="background-image: url('{{ asset('vendor/tabler/static/avatars/000m.jpg') }}')" class="avatar avatar-sm me-2"></span>

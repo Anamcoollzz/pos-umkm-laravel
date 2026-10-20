@@ -1,12 +1,6 @@
-<!-- BEGIN NAVBAR -->
-<header class="navbar navbar-expand-md d-print-none">
+<!-- BEGIN NAVBAR (DESKTOP) -->
+<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
   <div class="container-xl">
-    <!-- BEGIN NAVBAR TOGGLER -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle primary navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- END NAVBAR TOGGLER -->
-
     <div class="d-none d-md-flex align-items-center">
       <span class="badge bg-green-lt me-2">● Online</span>
       <span class="text-secondary small">Sistem Kasir &amp; Inventori UMKM</span>
