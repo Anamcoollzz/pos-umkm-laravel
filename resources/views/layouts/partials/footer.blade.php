@@ -1,4 +1,4 @@
-        <!-- BEGIN FOOTER -->
+<!-- BEGIN FOOTER -->
         <!--  BEGIN FOOTER  -->
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl">
@@ -41,3 +41,5 @@
             </div>
           </div>
         </footer>
+        <!--  END FOOTER  -->
+        <!-- END FOOTER -->

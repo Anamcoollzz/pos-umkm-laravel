@@ -1,4 +1,11 @@
-        <!-- BEGIN PAGE BODY -->
+@extends('layouts.app')
+
+@section('title', 'Dashboard - Tabler - Fluid vertical layout')
+
+@section('content')
+  @include('layouts.partials.page-header')
+
+<!-- BEGIN PAGE BODY -->
         <main id="content" class="page-body">
           <div class="container-xl">
             <div class="row row-deck row-cards">
@@ -2355,3 +2362,5 @@
             </div>
           </div>
         </main>
+        <!-- END PAGE BODY -->
+@endsection

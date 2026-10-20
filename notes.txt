@@ -1,7 +1,8 @@
-jangan pernah test laravel, biar gw test sendiri aja fitur2 yg dibuat, biar gw tau bugnya dimana.
+1. jangan pernah test laravel, biar gw test sendiri aja fitur2 yg dibuat, biar gw tau bugnya dimana.
 
-buatkan layout dan halaman / dari tabler/dashboard/layout-fluid-vertical.html ya, jadikan blade dan partials
+2. buatkan layout dan halaman / dari tabler/dashboard/layout-fluid-vertical.html ya, jadikan blade dan partials
 
-oke udah paham kan layoutnya, nanti gw kasih perintah
+3. kalau butuh tambahan ada di tabler/dashboard
 
-kalau butuh tambahan ada di tabler/dashboard
+4. oke udah paham kan layoutnya, nanti gw kasih perintah
+
