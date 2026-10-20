@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,10 +21,21 @@ class SaleController extends Controller
      */
     public function index(Request $request): View
     {
+        $currentUser = $request->user();
+        $isKasir = $currentUser && ! $currentUser->isAdmin();
+
         $search = $request->string('search')->trim()->value();
         $date = $request->string('date')->value();
+        $userId = $isKasir ? $currentUser->id : $request->input('user_id');
 
         $query = Sale::with(['user', 'items.product'])->latest('sold_at');
+
+        // Kasir hanya boleh melihat transaksinya sendiri
+        if ($isKasir) {
+            $query->where('user_id', $currentUser->id);
+        } elseif (! empty($userId)) {
+            $query->where('user_id', $userId);
+        }
 
         if ($search !== '') {
             $query->where('invoice_number', 'like', "%{$search}%");
@@ -34,18 +46,24 @@ class SaleController extends Controller
         }
 
         $sales = $query->paginate(10)->withQueryString();
+        $cashiers = $isKasir ? collect([$currentUser]) : User::orderBy('name')->get();
 
-        $totalTransactions = Sale::count();
-        $totalRevenue = Sale::sum('total_amount');
-        $todayRevenue = Sale::whereDate('sold_at', now()->today())->sum('total_amount');
+        // Metrik transaksi disesuaikan dengan hak akses (kasir hanya ringkasan miliknya)
+        $baseMetrics = $isKasir ? Sale::where('user_id', $currentUser->id) : Sale::query();
+        $totalTransactions = (clone $baseMetrics)->count();
+        $totalRevenue = (clone $baseMetrics)->sum('total_amount');
+        $todayRevenue = (clone $baseMetrics)->whereDate('sold_at', now()->today())->sum('total_amount');
 
         return view('sales.index', compact(
             'sales',
             'search',
             'date',
+            'userId',
+            'cashiers',
             'totalTransactions',
             'totalRevenue',
-            'todayRevenue'
+            'todayRevenue',
+            'isKasir'
         ));
     }
 
@@ -134,6 +152,8 @@ class SaleController extends Controller
      */
     public function show(Sale $sale): View
     {
+        $this->authorizeSaleAccess($sale);
+
         $sale->load(['user', 'items.product']);
 
         return view('sales.show', compact('sale'));
@@ -144,6 +164,8 @@ class SaleController extends Controller
      */
     public function print(Sale $sale): View
     {
+        $this->authorizeSaleAccess($sale);
+
         $sale->load(['user', 'items.product']);
 
         return view('sales.print', compact('sale'));
@@ -154,11 +176,26 @@ class SaleController extends Controller
      */
     public function downloadPdf(Sale $sale): Response
     {
+        $this->authorizeSaleAccess($sale);
+
         $sale->load(['user', 'items.product']);
 
         $pdf = Pdf::loadView('sales.invoice-pdf', compact('sale'))
             ->setPaper('a5', 'portrait');
 
         return $pdf->download("invoice-{$sale->invoice_number}.pdf");
+    }
+
+    /**
+     * Authorize that the current user has access to view/print this sale.
+     * Kasir hanya boleh mengakses transaksinya sendiri.
+     */
+    private function authorizeSaleAccess(Sale $sale): void
+    {
+        $user = Auth::user();
+
+        if ($user && ! $user->isAdmin() && $sale->user_id !== $user->id) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat transaksi kasir lain.');
+        }
     }
 }

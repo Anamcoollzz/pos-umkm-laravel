@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest Authentication Routes
@@ -19,9 +20,10 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Manajemen Barang (Hanya Admin)
+    // Manajemen Barang & Kasir (Hanya Admin)
     Route::middleware('role:admin')->group(function () {
         Route::resource('products', ProductController::class)->except(['show']);
+        Route::resource('users', UserController::class)->except(['show']);
     });
 
     // Transaksi Penjualan (Sales / POS)

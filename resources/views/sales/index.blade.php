@@ -97,9 +97,17 @@
               </span>
               <input type="text" name="search" value="{{ $search }}" class="form-control form-control-sm" placeholder="No. Invoice...">
             </div>
-            <input type="date" name="date" value="{{ $date }}" class="form-control form-control-sm" style="width: 160px;" title="Filter Tanggal">
+            @if (Auth::user()?->isAdmin())
+            <select name="user_id" class="form-select form-select-sm" style="width: 160px;" title="Filter Staf/Kasir">
+              <option value="">Semua Kasir</option>
+              @foreach ($cashiers as $c)
+                <option value="{{ $c->id }}" {{ $userId == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+              @endforeach
+            </select>
+            @endif
+            <input type="date" name="date" value="{{ $date }}" class="form-control form-control-sm" style="width: 150px;" title="Filter Tanggal">
             <button type="submit" class="btn btn-sm btn-secondary">Filter</button>
-            @if ($search !== '' || $date !== '')
+            @if ($search !== '' || $date !== '' || (Auth::user()?->isAdmin() && !empty($userId)))
               <a href="{{ route('sales.index') }}" class="btn btn-sm btn-outline-secondary" title="Reset filter">Reset</a>
             @endif
           </form>
