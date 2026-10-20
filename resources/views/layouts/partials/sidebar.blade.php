@@ -33,7 +33,14 @@
           <span style="background-image: url('{{ asset('vendor/tabler/static/avatars/000m.jpg') }}')" class="avatar avatar-sm me-2"></span>
           <div class="text-truncate">
             <div class="font-weight-medium text-truncate">{{ Auth::user()->name ?? 'Administrator' }}</div>
-            <div class="small text-secondary text-truncate" style="font-size: 11px;">{{ Auth::user()->email ?? 'admin@example.com' }}</div>
+            <div class="small text-secondary text-truncate d-flex align-items-center gap-1 mt-1" style="font-size: 11px;">
+              @if (Auth::user()?->isAdmin())
+                <span class="badge bg-blue-lt">Admin</span>
+              @else
+                <span class="badge bg-green-lt">Kasir</span>
+              @endif
+              <span class="text-truncate">{{ Auth::user()->email ?? '' }}</span>
+            </div>
           </div>
         </div>
         <form action="{{ route('logout') }}" method="POST" class="ms-2">
@@ -86,7 +93,8 @@
           </a>
         </li>
 
-        <li class="nav-section-title mt-2">Inventori</li>
+        @if (Auth::user()?->isAdmin())
+        <li class="nav-section-title mt-2">Inventori (Admin)</li>
 
         <!-- 4. Data Barang -->
         <li class="nav-item {{ request()->routeIs('products.index') || request()->routeIs('products.edit') ? 'active' : '' }}">
@@ -109,6 +117,7 @@
             <span class="nav-link-title">Tambah Barang Baru</span>
           </a>
         </li>
+        @endif
       </ul>
     </nav>
   </div>

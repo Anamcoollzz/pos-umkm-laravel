@@ -19,8 +19,10 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Manajemen Barang (Products)
-    Route::resource('products', ProductController::class)->except(['show']);
+    // Manajemen Barang (Hanya Admin)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('products', ProductController::class)->except(['show']);
+    });
 
     // Transaksi Penjualan (Sales / POS)
     Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');

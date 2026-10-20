@@ -40,13 +40,21 @@
           <span class="avatar avatar-sm rounded" style="background-image: url('{{ asset('vendor/tabler/static/avatars/000m.jpg') }}')"></span>
           <div class="d-none d-xl-block ps-2">
             <div>{{ Auth::user()->name ?? 'Administrator' }}</div>
-            <div class="mt-1 small text-secondary">Kasir Aktif</div>
+            <div class="mt-1 small text-secondary">
+              @if (Auth::user()?->isAdmin())
+                <span class="badge bg-blue-lt">Admin</span>
+              @else
+                <span class="badge bg-green-lt">Kasir</span>
+              @endif
+            </div>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
           <div class="dropdown-header">Akun: {{ Auth::user()->email ?? 'admin@example.com' }}</div>
           <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
-          <a href="{{ route('products.index') }}" class="dropdown-item">Manajemen Barang</a>
+          @if (Auth::user()?->isAdmin())
+            <a href="{{ route('products.index') }}" class="dropdown-item">Manajemen Barang</a>
+          @endif
           <a href="{{ route('sales.index') }}" class="dropdown-item">Riwayat Penjualan</a>
           <div class="dropdown-divider"></div>
           <form action="{{ route('logout') }}" method="POST">

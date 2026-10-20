@@ -15,19 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Administrator UMKM',
                 'password' => bcrypt('password'),
+                'role' => 'admin',
             ]
         );
 
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Kasir UMKM',
                 'password' => bcrypt('password'),
+                'role' => 'kasir',
             ]
         );
     }

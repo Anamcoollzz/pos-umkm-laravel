@@ -12,10 +12,12 @@
         </div>
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
-            <a href="{{ route('products.create') }}" class="btn btn-outline-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              Tambah Barang
-            </a>
+            @if (Auth::user()?->isAdmin())
+              <a href="{{ route('products.create') }}" class="btn btn-outline-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                Tambah Barang
+              </a>
+            @endif
             <a href="{{ route('sales.create') }}" class="btn btn-primary d-inline-flex align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
               Buka Kasir (POS)
@@ -79,20 +81,30 @@
           </div>
         </div>
 
-        <!-- 3. Estimasi Laba Kotor Bulan Ini -->
+        <!-- 3. Estimasi Laba Kotor (Admin) atau Informasi Peran (Kasir) -->
         <div class="col-sm-6 col-lg-3">
           <div class="card card-sm">
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col-auto">
                   <span class="bg-azure text-white avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 3v18" /><path d="M16 7h-6a3.5 3.5 0 0 0 0 7h4a3.5 3.5 0 0 1 0 7h-6" /></svg>
+                    @if (Auth::user()?->isAdmin())
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 3v18" /><path d="M16 7h-6a3.5 3.5 0 0 0 0 7h4a3.5 3.5 0 0 1 0 7h-6" /></svg>
+                    @else
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+                    @endif
                   </span>
                 </div>
                 <div class="col">
-                  <div class="text-secondary small font-weight-medium">Estimasi Laba Kotor</div>
-                  <div class="h2 mb-0 fw-bold text-azure">Rp {{ number_format($monthlyProfit, 0, ',', '.') }}</div>
-                  <div class="text-secondary small mt-1">Margin jual - beli</div>
+                  @if (Auth::user()?->isAdmin())
+                    <div class="text-secondary small font-weight-medium">Estimasi Laba Kotor</div>
+                    <div class="h2 mb-0 fw-bold text-azure">Rp {{ number_format($monthlyProfit, 0, ',', '.') }}</div>
+                    <div class="text-secondary small mt-1">Margin jual - beli</div>
+                  @else
+                    <div class="text-secondary small font-weight-medium">Peran Pengguna</div>
+                    <div class="h2 mb-0 fw-bold text-azure">Kasir Aktif</div>
+                    <div class="text-secondary small mt-1">Akses POS &amp; Riwayat</div>
+                  @endif
                 </div>
               </div>
             </div>
@@ -163,15 +175,23 @@
                       </span>
                     </div>
                     <div class="col text-truncate">
-                      <a href="{{ route('products.edit', $lp) }}" class="text-reset d-block font-weight-medium">{{ $lp->name }}</a>
+                      @if (Auth::user()?->isAdmin())
+                        <a href="{{ route('products.edit', $lp) }}" class="text-reset d-block font-weight-medium">{{ $lp->name }}</a>
+                      @else
+                        <span class="d-block font-weight-medium">{{ $lp->name }}</span>
+                      @endif
                       <div class="d-block text-secondary text-truncate mt-n1 small">
                         Min. stok: {{ $lp->minimum_stock }} | Rp {{ number_format($lp->selling_price, 0, ',', '.') }}
                       </div>
                     </div>
                     <div class="col-auto">
-                      <a href="{{ route('products.edit', $lp) }}" class="btn btn-sm btn-outline-primary" title="Edit / Tambah Stok">
-                        Restok
-                      </a>
+                      @if (Auth::user()?->isAdmin())
+                        <a href="{{ route('products.edit', $lp) }}" class="btn btn-sm btn-outline-primary" title="Edit / Tambah Stok">
+                          Restok
+                        </a>
+                      @else
+                        <span class="badge bg-warning-lt">Perlu Restok</span>
+                      @endif
                     </div>
                   </div>
                 </div>
