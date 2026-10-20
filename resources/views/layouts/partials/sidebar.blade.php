@@ -8,19 +8,21 @@
     <!-- END NAVBAR TOGGLER -->
 
     <!-- BEGIN NAVBAR LOGO -->
-    <div class="navbar-brand navbar-brand-autodark px-0 py-3 text-start">
+    <div class="navbar-brand navbar-brand-autodark">
       <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none text-reset">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store text-primary me-2">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M3 21l18 0" />
-          <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
-          <path d="M5 21l0 -10.15" />
-          <path d="M19 21l0 -10.15" />
-          <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
-        </svg>
-        <div>
-          <div class="h3 mb-0 fw-bold">POS UMKM</div>
-          <div class="small text-secondary" style="font-size: 11px;">Penjualan &amp; Stok</div>
+        <span class="avatar avatar-sm rounded-2 bg-primary text-white shadow-sm me-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon m-0">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 21l18 0" />
+            <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+            <path d="M5 21l0 -10.15" />
+            <path d="M19 21l0 -10.15" />
+            <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+          </svg>
+        </span>
+        <div class="d-flex flex-column text-start">
+          <span class="fs-2 fw-bolder tracking-tight lh-1 text-body">POS UMKM</span>
+          <span class="small text-secondary mt-1 lh-1" style="font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase;">Penjualan &amp; Stok</span>
         </div>
       </a>
     </div>

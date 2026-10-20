@@ -24,16 +24,21 @@
     <div class="page page-center">
       <div class="container container-tight py-4">
         <div class="text-center mb-4">
-          <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store text-primary">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <path d="M3 21l18 0" />
-              <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
-              <path d="M5 21l0 -10.15" />
-              <path d="M19 21l0 -10.15" />
-              <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
-            </svg>
-            <span class="h2 ms-2 mb-0 fw-bold">POS UMKM</span>
+          <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark d-inline-flex align-items-center text-decoration-none">
+            <span class="avatar avatar-md rounded-2 bg-primary text-white shadow-sm me-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon m-0">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 21l18 0" />
+                <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                <path d="M5 21l0 -10.15" />
+                <path d="M19 21l0 -10.15" />
+                <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+              </svg>
+            </span>
+            <div class="d-flex flex-column text-start">
+              <span class="fs-1 fw-bolder tracking-tight lh-1 text-body">POS UMKM</span>
+              <span class="small text-secondary mt-1 lh-1" style="font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase;">Penjualan &amp; Stok</span>
+            </div>
           </a>
         </div>
 
