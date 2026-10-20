@@ -1,0 +1,102 @@
+@extends('layouts.app')
+
+@section('title', 'Tambah Barang Baru - Sistem POS UMKM')
+
+@section('content')
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <div class="page-pretitle">Inventori</div>
+          <h1 class="page-title">Tambah Barang Baru</h1>
+        </div>
+        <div class="col-auto ms-auto d-print-none">
+          <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">
+            <!-- Arrow left -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
+            Kembali
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="content" class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards justify-content-center">
+        <div class="col-md-8 col-lg-7">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title">Formulir Barang</h3>
+            </div>
+            <form action="{{ route('products.store') }}" method="POST">
+              @csrf
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="code">Kode Barang / Barcode</label>
+                    <input type="text" id="code" name="code" class="form-control font-monospace @error('code') is-invalid @enderror" value="{{ old('code', $suggestedCode) }}" placeholder="Contoh: BRG-001" required>
+                    @error('code')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <small class="form-hint">Kode unik pengenal barang.</small>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="name">Nama Barang</label>
+                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contoh: Kopi Arabika 100gr" required>
+                    @error('name')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="purchase_price">Harga Beli (Modal)</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" id="purchase_price" name="purchase_price" class="form-control @error('purchase_price') is-invalid @enderror" value="{{ old('purchase_price', 0) }}" min="0" step="100" required>
+                    </div>
+                    @error('purchase_price')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="selling_price">Harga Jual (Konsumen)</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" id="selling_price" name="selling_price" class="form-control @error('selling_price') is-invalid @enderror" value="{{ old('selling_price', 0) }}" min="0" step="100" required>
+                    </div>
+                    @error('selling_price')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="stock">Stok Awal</label>
+                    <input type="number" id="stock" name="stock" class="form-control @error('stock') is-invalid @enderror" value="{{ old('stock', 0) }}" min="0" required>
+                    @error('stock')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <small class="form-hint">Jumlah unit fisik yang tersedia saat ini.</small>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label required" for="minimum_stock">Batas Minimum Stok</label>
+                    <input type="number" id="minimum_stock" name="minimum_stock" class="form-control @error('minimum_stock') is-invalid @enderror" value="{{ old('minimum_stock', 5) }}" min="0" required>
+                    @error('minimum_stock')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <small class="form-hint">Peringatan otomatis muncul bila stok &le; angka ini.</small>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-light-subtle d-flex justify-content-end gap-2">
+                <a href="{{ route('products.index') }}" class="btn btn-link link-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M5 12l5 5l10 -10" /></svg>
+                  Simpan Barang
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+@endsection
